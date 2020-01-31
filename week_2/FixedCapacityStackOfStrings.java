@@ -15,6 +15,16 @@ public class FixedCapacityStackOfStrings {
     }
 
     public String pop() {
+        // loitering: holding a reference to an object when it is no longer needed.
         return s[--N];
+    }
+
+    public String pop2() {
+        /* avoids loitering.
+         * Garbage Collector can reclaim memory only if no outstanding references
+         */
+        String item = s[--N];
+        s[N] = null;
+        return item;
     }
 }

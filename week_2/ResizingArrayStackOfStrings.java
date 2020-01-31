@@ -1,4 +1,9 @@
 public class ResizingArrayStackOfStrings {
+    /*
+     * How to shrink array?
+     * push(): double size of array s[] when array is full
+     * pop(): halve size of array s[] when array is one-quarter full.
+     */
     private String[] s;
     private int N = 0;
 
@@ -18,5 +23,13 @@ public class ResizingArrayStackOfStrings {
             copy[i] = s[i];
 
         s = copy;
+    }
+
+    public String pop() {
+        String item = s[--N];
+        s[N] = null;
+        if (N > 0 && N == s.length / 4)
+            resize(s.length / 2);
+        return item;
     }
 }
