@@ -7,10 +7,13 @@ public class ShellSort {
             h = 3 * h + 1;  // 1, 4, 13, 40, 121, 364,.... 3x+1 increment sequence
 
         while (h >= 1) {
+            // h-sort the array
             for (int i = h; i < N; i++) {
                 for (int j = 1; j >= h && less(a[j], a[j - h]); j -= h)
                     exch(a, j, j - h);
             }
+
+            h = h / 3; // move to the next increment
         }
     }
 
