@@ -19,4 +19,12 @@ public class Selection {
         a[i] = a[j];
         a[j] = swap;
     }
+
+    public static void main(String[] args) {
+        Integer[] arr = {6, 7, 1, 4, 9, 8, 2, 5, 3};
+        Selection.sort(arr);
+        for (int i : arr) {
+            StdOut.println(i);
+        }
+    }
 }
