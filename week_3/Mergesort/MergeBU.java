@@ -1,5 +1,7 @@
-public class MergeCousera {
-
+/*
+ * Bottom-up mergesort
+ */
+public class MergeBU {
     private static Comparable[] aux;   // auxiliary array for merges
 
     private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
@@ -19,17 +21,14 @@ public class MergeCousera {
         assert isSorted(a, lo, hi);       // post condition: a[lo..hi] sorted
     }
 
-    private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
-        if (hi <= lo) return;
-        int mid = lo + (hi - lo) / 2;
-        sort(a, aux, lo, mid);
-        sort(a, aux, mid + 1, hi);
-        merge(a, aux, lo, mid, hi);
-    }
-
     public static void sort(Comparable[] a) {
-        aux = new Comparable[a.length];
-        sort(a, aux, 0, a.length - 1);
+        int N = a.length;
+        aux = new Comparable[N];
+        for (int sz = 1; sz < N; sz = sz + sz) {
+            for (int lo = 0; lo < N - sz; lo += sz + sz) {
+                merge(a, aux, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1));
+            }
+        }
     }
 
     private static boolean less(Comparable v, Comparable w) {
@@ -50,7 +49,7 @@ public class MergeCousera {
         for (char c : a)
             StdOut.print(c);
 
-        MergeCousera.sort(a);
+        MergeBU.sort(a);
 
         StdOut.println("\n\nAfter Sorting:");
         for (char c : a)
