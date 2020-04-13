@@ -66,7 +66,17 @@ public class Point implements Comparable<Point> {
          * as positive zero; treat the slope of a vertical line segment as positive infinity;
          * treat the slope of a degenerate line segment (between a point and itself) as negative infinity.
          *
-         * TODO */
+         */
+        double dy, dx;
+        dy = that.y - this.y;
+        dx = that.x - this.x;
+
+        if (dx == 0)
+            return Double.POSITIVE_INFINITY;
+        else if ((that.y == this.y) && (that.x == this.x))
+            return Double.NEGATIVE_INFINITY;
+        else
+            return (dy / dx);
     }
 
     /**
@@ -87,7 +97,12 @@ public class Point implements Comparable<Point> {
          * Formally, the invoking point (x0, y0) is less than the argument point (x1, y1) if and only if either
          * y0 < y1 or if y0 = y1 and x0 < x1.
          *
-         * TODO */
+         */
+        if ((this.y < that.y) || ((this.y == that.y) && (this.x < that.x)))
+            return -1;
+        else if ((this.x == that.x) && (this.y == that.y))
+            return 0;
+        else return 1;
     }
 
     /**
@@ -104,6 +119,12 @@ public class Point implements Comparable<Point> {
          * Treat horizontal, vertical, and degenerate line segments as in the slopeTo() method.
          * TODO
          * */
+        return new Comparator<Point>() {
+            @Override
+            public int compare(Point p1, Point p2) {
+                return Double.compare(slopeTo(p1), slopeTo(p2));
+            }
+        };
     }
 
 
