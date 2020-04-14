@@ -1,4 +1,4 @@
-/******************************************************************************
+/* *****************************************************************************
  *  Compilation:  javac Point.java
  *  Execution:    java Point
  *  Dependencies: none
@@ -144,6 +144,24 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
+        Point[] points = new Point[6];
+        points[0] = new Point(19000, 10000);
+        points[1] = new Point(18000, 10000);
+        points[2] = new Point(32000, 10000);
+        points[3] = new Point(21000, 10000);
+        points[4] = new Point(1234, 5678);
+        points[5] = new Point(14000, 10000);
+
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+
+        for (Point p : points) {
+            p.draw();
+        }
+        points[0].drawTo(points[4]);
+
+        StdDraw.show();
+
     }
 }
