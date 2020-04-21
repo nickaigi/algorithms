@@ -13,19 +13,64 @@
  * points together. The algorithm is fast because the bottleneck operation is sorting.
  * */
 
+import java.util.ArrayList;
+
 public class FastCollinearPoints {
+    private int segmentsCount = 0;
+    private int segmentSize = 10;
+    private LineSegment[] segmentArray = new LineSegment[segmentSize];
+
     public FastCollinearPoints(Point[] points) {
         // finds all line segments containing 4 or more points
         if (points == null)
             throw new IllegalArgumentException();
+        int size = points.length;
+
+        for (int i = 0; i < size; i++) {
+            if (points[i] == null)
+                throw new IllegalArgumentException();
+            for (int j = 0; j < size; j++) {
+                if (points[j] == null)
+                    throw new IllegalArgumentException();
+                if (i != j) {
+                    if (points[i].compareTo(points[j]) == 0)
+                        throw new IllegalArgumentException("Same Points");
+                }
+            }
+        }
     }
+
+    private void resizeSegmentArray() {
+        LineSegment[] copy = new LineSegment[segmentArray.length * 2];
+        System.arraycopy(segmentArray, 0, copy, 0, segmentArray.length);
+        segmentArray = copy;
+    }
+
+    private void genFastCollinearPoints(Point[] points, int size) {
+        // todo()
+        ArrayList<Integer> segmentArrayList = new ArrayList<>();
+        for (int p = 0; p < size; p++) {
+            // swap point[p] with point[0]
+            Point tempPoint = points[p];
+            points[p] = points[0];
+            points[0] = tempPoint;
+
+            // clone the array
+            Point[] sorted = points.clone();
+
+        }
+
+    }
+
 
     public int numberOfSegments() {
         // the number of line segments
+        return segmentsCount;
     }
 
     public LineSegment[] segments() {
         // the line segments
+        return segment_array;
     }
 
     public static void main(String[] args) {
