@@ -14,6 +14,7 @@
  * */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FastCollinearPoints {
     private int segmentsCount = 0;
@@ -48,18 +49,69 @@ public class FastCollinearPoints {
 
     private void genFastCollinearPoints(Point[] points, int size) {
         // todo()
-        ArrayList<Integer> segmentArrayList = new ArrayList<>();
+        ArrayList<Integer> segmentArrayList = new ArrayList<Integer>();
         for (int p = 0; p < size; p++) {
-            // swap point[p] with point[0]
+            // swap point[p] with point[0] to always have current item at zeroth index
             Point tempPoint = points[p];
             points[p] = points[0];
             points[0] = tempPoint;
 
-            // clone the array
+            // copy the array
             Point[] sorted = points.clone();
+            Arrays.sort(sorted, 1, size, tempPoint.slopeOrder());
 
+            double previousSlope = tempPoint.slopeTo(sorted[1]);
+
+            int segmentLengthTracker = 1;
+
+            segmentArrayList.clear();
+            segmentArrayList.add(0);
+            segmentArrayList.add(1);
+
+            // what start at index 2?
+            int minimumSegment = 2;
+            for (int q = 2; q < size; q++) {
+                double newSlope = tempPoint.slopeTo(sorted[q]);
+                // slope doesn't match the end of the array?
+                if (previousSlope != newSlope || q == size - 1) {
+                    Point lastPoint = sorted[q - 1];
+                    if (q == size - 1 && previousSlope == newSlope) {
+                        lastPoint = sorted[q];
+                        segmentArrayList.add(q);
+                        segmentLengthTracker++;
+                    }
+
+                    // ignore -ve slopes
+                    if (segmentLengthTracker > minimumSegment) {
+                        Point maxP, minP;
+                        maxP = minP = tempPoint;
+                        for (int innerCSegTracker : segmentArrayList) {
+                            if (sorted[innerCSegTracker].compareTo(maxP) > 0)
+                                maxP = sorted[innerCSegTracker];
+
+                            if (sorted[innerCSegTracker].compareTo(minP) <= 0)
+                                minP = sorted[innerCSegTracker];
+                        }
+
+                        if (segmentLengthTracker == segmentArray.length)
+                            resizeSegmentArray();
+                        if (tempPoint.compareTo(minP) == 0) {
+                            segmentArray[segmentsCount] = new LineSegment(minP, maxP);
+                            segmentsCount++;
+                        }
+                    }
+                    segmentLengthTracker = 1;
+                    segmentArrayList.clear();
+                    ;
+                    segmentArrayList.add(0);
+                    segmentArrayList.add(q);
+                } else {
+                    segmentLengthTracker++;
+                    segmentArrayList.add(q);
+                }
+                previousSlope = newSlope;
+            }
         }
-
     }
 
 
@@ -70,7 +122,17 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() {
         // the line segments
-        return segment_array;
+        LineSegment[] copy = new LineSegment[segmentsCount];
+        int count = 0;
+        for (LineSegment segment : segmentArray) {
+            if (segment != null) {
+                copy[count] = segment;
+                count++;
+            }
+        }
+        // were all values copied?
+        assert (count == segmentsCount);
+        return copy;
     }
 
     public static void main(String[] args) {
