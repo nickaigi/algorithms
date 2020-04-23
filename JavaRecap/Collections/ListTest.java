@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class ListTest {
-    private static final String colors[] = {
+    private static final String[] colors = {
             "black", "yellow", "green", "blue", "violet", "silver"
     };
-    private static final String colors2[] = {
+    private static final String[] colors2 = {
             "gold", "white", "brown", "blue", "gray", "silver"
     };
 
