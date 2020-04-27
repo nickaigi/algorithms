@@ -3,17 +3,17 @@ import java.util.*;
 public class CollectionTest {
 
     public static void main(String[] args) {
-        String[] colors = { "MAGENTA", "RED", "WHITE", "BLUE", "CYAN" };
+        String[] colors = {"MAGENTA", "RED", "WHITE", "BLUE", "CYAN"};
         List<String> list = new ArrayList<>();
 
+        // old way of adding to list
+        for (String color : colors)
+            list.add(color);
 
-        for (int count = 0; count < list.size(); count++)
-            system.out.printf("%s ", list.get(count));
-
-        String[] removeColors = { "RED", "WHITE", "BLUE" };
+        String[] removeColors = {"RED", "WHITE", "BLUE"};
         List<String> removeList = new ArrayList<>();
 
-        // concise version
+        // concise version of adding to list
         Collections.addAll(removeList, removeColors);
 
         System.out.println("ArrayList: ");
