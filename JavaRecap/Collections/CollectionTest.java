@@ -1,25 +1,19 @@
 import java.util.*;
 
 public class CollectionTest {
-    private static final String[] colors = {
-            "MAGENTA", "RED", "WHITE", "BLUE", "CYAN"
-    };
 
-    private static final String[] removeColors = {
-            "RED", "WHITE", "BLUE"
-    };
-
-    private CollectionTest() {
+    public static void main(String[] args) {
+        String[] colors = { "MAGENTA", "RED", "WHITE", "BLUE", "CYAN" };
         List<String> list = new ArrayList<>();
+
+
+        for (int count = 0; count < list.size(); count++)
+            system.out.printf("%s ", list.get(count));
+
+        String[] removeColors = { "RED", "WHITE", "BLUE" };
         List<String> removeList = new ArrayList<>();
 
-        // add elements in colors array to list
-        for (String color : colors)
-            list.add(color);
-
-        /* add elements in removeColors to removeList
-         * concise version of L17-L18
-         */
+        // concise version
         Collections.addAll(removeList, removeColors);
 
         System.out.println("ArrayList: ");
@@ -27,14 +21,14 @@ public class CollectionTest {
         for (String s : list) System.out.printf("%s ", s);
 
         // remove colors contained in removeList
-        removeColors(list, removeList);
+        removeColorsBetter(list, removeList);
 
         System.out.println("\n\nArrayList after calling removeColors: ");
         for (String color : list)
             System.out.printf("%s ", color);
     }
 
-    private void removeColors(Collection<String> collection1, Collection<String> collection2) {
+    private static void removeColors(Collection<String> collection1, Collection<String> collection2) {
         // get iterator
         Iterator<String> iterator = collection1.iterator();
 
@@ -44,12 +38,8 @@ public class CollectionTest {
                 iterator.remove(); // remove current color
     }
 
-    private void removeColorsBetter(Collection<String> collection1, Collection<String> collection2) {
+    private static void removeColorsBetter(Collection<String> collection1, Collection<String> collection2) {
         // remove current color
         collection1.removeIf(collection2::contains);
-    }
-
-    public static void main(String[] args) {
-        new CollectionTest();
     }
 }

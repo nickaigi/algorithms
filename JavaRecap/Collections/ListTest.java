@@ -4,44 +4,45 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class ListTest {
-    private static final String[] colors = {
-            "black", "yellow", "green", "blue", "violet", "silver"
-    };
-    private static final String[] colors2 = {
-            "gold", "white", "brown", "blue", "gray", "silver"
-    };
 
-    public ListTest() {
+    public static void main(String[] args) {
+        String[] colors =
+            { "black", "yellow", "green", "blue", "violet", "silver" };
+
         List<String> list1 = new LinkedList<>();
+
+        for (String color: colors)
+            list1.add(color);
+
+        String[] colors2 = 
+            { "gold", "white", "brown", "blue", "gray", "silver" };
+
         List<String> list2 = new LinkedList<>();
+        for (String color: colors2)
+            list2.add(color);
 
-        //add elements to list1
-        Collections.addAll(list1, colors);
-        Collections.addAll(list2, colors2);
-
-        //concatenate lists
-        list1.addAll(list2);
-        list2 = null; // release resources
-        printList(list1);
+        
+        list1.addAll(list2); //concatenate lists
+        list2 = null;        //release resources
+        printList(list1);    // print list elements
 
         convertToUppercaseStrings(list1);
         printList(list1);
 
-        System.out.print("\nDeleting elements 4 to 6...");
+        System.out.printf("\nDeleting elements 4 to 6...");
         removeItems(list1, 4, 7);
-
         printList(list1);
         printReversedList(list1);
     }
 
-    public void printList(List<String> list) {
+    public static void printList(List<String> list) {
         System.out.println("\nlist: ");
         for (String color : list)
             System.out.printf("%s ", color);
         System.out.println();
     }
 
-    private void convertToUppercaseStrings(List<String> list) {
+    private static void convertToUppercaseStrings(List<String> list) {
         ListIterator<String> iterator = list.listIterator();
         while (iterator.hasNext()) {
             String color = iterator.next();    // get item
@@ -49,19 +50,15 @@ public class ListTest {
         }
     }
 
-    private void removeItems(List<String> list, int start, int end) {
+    private static void removeItems(List<String> list, int start, int end) {
         list.subList(start, end).clear(); // remove items
     }
 
-    private void printReversedList(List<String> list) {
-        ListIterator<String> iterator = list.listIterator();
+    private static void printReversedList(List<String> list) {
+        ListIterator<String> iterator = list.listIterator(list.size());
         System.out.println("\nReversed List:");
 
         while (iterator.hasPrevious())
             System.out.printf("%s ", iterator.previous());
-    }
-
-    public static void main(String[] args) {
-        new ListTest();
     }
 }

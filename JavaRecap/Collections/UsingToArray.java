@@ -2,9 +2,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class UsingToArray {
-    public UsingToArray() {
-        String[] colors = {"black", "blue", "yellow"};
 
+    public static void main(String[] args) {
+        String[] colors = {"black", "blue", "yellow"};
         LinkedList<String> links = new LinkedList<>(Arrays.asList(colors));
 
         links.addLast("red");    // add as last item
@@ -17,9 +17,5 @@ public class UsingToArray {
         System.out.println("colors: ");
         for (String color : colors)
             System.out.println(color);
-    }
-
-    public static void main(String[] args) {
-        new UsingToArray();
     }
 }
