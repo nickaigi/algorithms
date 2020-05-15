@@ -67,16 +67,15 @@ public class Point implements Comparable<Point> {
          * treat the slope of a degenerate line segment (between a point and itself) as negative infinity.
          *
          */
-        double dy, dx;
-        dy = that.y - this.y;
-        dx = that.x - this.x;
-
-        if (dx == 0)
-            return Double.POSITIVE_INFINITY;
-        else if ((that.y == this.y) && (that.x == this.x))
+        if (this.x == that.x && this.y == that.y)
             return Double.NEGATIVE_INFINITY;
-        else
-            return (dy / dx);
+        if (this.x == that.x)
+            return Double.POSITIVE_INFINITY;
+
+        double slope = (double) (that.y - this.y) / (double) (that.x - this.x);
+        if (slope == 0)
+            return +0.0;
+        return slope;
     }
 
     /**
@@ -98,11 +97,12 @@ public class Point implements Comparable<Point> {
          * y0 < y1 or if y0 = y1 and x0 < x1.
          *
          */
-        if ((this.y < that.y) || ((this.y == that.y) && (this.x < that.x)))
+        if ((this.y < that.y) || (this.y == that.y && this.x < that.x))
             return -1;
-        else if ((this.x == that.x) && (this.y == that.y))
+        if (this.y == that.y && this.x == that.x)
             return 0;
-        else return 1;
+        else
+            return 1;
     }
 
     /**
@@ -122,7 +122,14 @@ public class Point implements Comparable<Point> {
         return new Comparator<Point>() {
             @Override
             public int compare(Point p1, Point p2) {
-                return Double.compare(slopeTo(p1), slopeTo(p2));
+                double slopeP1 = slopeTo(p1);
+                double slopeP2 = slopeTo(p2);
+                if (slopeP1 < slopeP2)
+                    return -1;
+                if (slopeP1 == slopeP2)
+                    return 0;
+                else
+                    return -1;
             }
         };
     }
